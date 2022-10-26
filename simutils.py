@@ -47,3 +47,26 @@ def separator():
     else :
         sep = '/'
     return sep
+
+# os 상관없이 경로 문제 해결을 위한 함수 및 객체 만들 예정 (아직 수정중)
+# pathlib을 벤치마킹
+def os_path(p):
+    nt_sep = p.split('\\')
+    ot_sep = p.split('/')
+    if nt_sep > ot_sep:
+        sep = '\\'
+    elif nt_sep < ot_sep:
+        sep = '/'
+    else :
+        return p
+    
+    if os.name == 'nt':
+        if sep == '\\':
+            return p
+        else :
+            return '\\'.join(ot_sep)
+    else :
+        if sep == '/':
+            return p
+        else :
+            return '/'.join(nt_sep)
