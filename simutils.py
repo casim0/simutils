@@ -1,7 +1,9 @@
 import sys
 import os
 import time
-
+from datetime import datetime
+from pytz import timezone
+    
 class ProgBar(object):
     def __init__(self, total, decimals=2, bar_length=30, interval=0.05):
         self.total = total
@@ -47,6 +49,10 @@ def separator():
     else :
         sep = '/'
     return sep
+
+def today_datetime():
+    return datetime.now(timezone('Asia/Seoul')).strftime("%Y%m%dT%H%M%S")
+
 
 # os 상관없이 경로 문제 해결을 위한 함수 및 객체 만들 예정 (아직 수정중)
 # pathlib을 벤치마킹
