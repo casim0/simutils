@@ -3,7 +3,9 @@ import os
 import time
 from datetime import datetime
 from pytz import timezone
-    
+from pathlib import Path
+import shutil
+
 class ProgBar(object):
     def __init__(self, total, decimals=2, bar_length=30, interval=0.05):
         self.total = total
@@ -53,9 +55,26 @@ def separator():
 def today_datetime():
     return datetime.now(timezone('Asia/Seoul')).strftime("%Y%m%dT%H%M%S")
 
+def pathlib_path(path):
+    if isinstance(path, Path):
+        path = Path(path)
+    return path
+
+def shutil_copy(input_file, output_dir, file_name=None, ver=1):
+    input_file = pathlib_path(input_file)
+    output_dir = pathlib_path(output_dir)
+
+    if not file_name:
+        file_name = input_file.name
+
+    if ver==2:
+        shutil.copy2(input_file, output_dir / file_name)
+    else :
+        shutil.copy(input_file, output_dir / file_name)
 
 # os 상관없이 경로 문제 해결을 위한 함수 및 객체 만들 예정 (아직 수정중)
 # pathlib을 벤치마킹
+# replace 활용
 def os_path(p):
     nt_sep = p.split('\\')
     ot_sep = p.split('/')
